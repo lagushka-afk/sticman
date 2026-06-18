@@ -5,38 +5,38 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-   
+
     public static GameManager Instance;
-    
+
     public Transform LeftSpawn;
     public Transform RightSpawn;
     public GameObject LeftBase;
     public GameObject RightBase;
 
-  
+
     public GameObject minerp;
     public GameObject swordp;
     public GameObject archerp;
     public GameObject tankp;
 
-    
-    
+
+
     public int MinerPrice = 25;
     public int SwordPrice = 50;
     public int ArcherPrice = 75;
     public int TankPrice = 150;
 
-   
+
     public int ColvoM = 5;
     public int ColvoU = 7;
 
-   
+
     public float botMinSpawnDelay = 2f;
     public float botMaxSpawnDelay = 5f;
     public int botStartGold = 100;
     public float botGoldRate = 1f;
 
-  
+
     public int minerIncome = 10;
     public float minerInterval = 3f;
 
@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     private float botSpawnTimer;
     private float nextBotSpawnTime;
 
+    public Transform spawn;
     void Start()
     {
         Instance = this;
@@ -74,13 +75,13 @@ public class GameManager : MonoBehaviour
         archerPriceText.text = ArcherPrice.ToString();
         tankPriceText.text = TankPrice.ToString();
 
-         
+
         minerButton.onClick.AddListener(SpawnMiner);
         swordsmanButton.onClick.AddListener(SpawnSwordsman);
         archerButton.onClick.AddListener(SpawnArcher);
         tankButton.onClick.AddListener(SpawnTank);
 
-          
+
         nextBotSpawnTime = Random.Range(botMinSpawnDelay, botMaxSpawnDelay);
         botSpawnTimer = 0;
         botGold = botStartGold;
@@ -88,15 +89,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+
         playerGoldText.text = $"Золото: {playerGold}";
         minerCountText.text = $"Шахтеры: {currentMinerCount}/{ColvoM}";
         warriorCountText.text = $"Воины: {currentWarriorCount}/{ColvoU}";
 
-           
+
         botGold += (int)(botGoldRate * Time.deltaTime);
 
-        
+
         botSpawnTimer += Time.deltaTime;
         if (botSpawnTimer >= nextBotSpawnTime)
         {
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-        
+
     public void SpawnMiner()
     {
         if (currentMinerCount >= ColvoM) return;
@@ -115,13 +116,13 @@ public class GameManager : MonoBehaviour
         playerGold -= MinerPrice;
         currentMinerCount++;
 
-        GameObject miner = Instantiate(minerp, LeftSpawn.position, Quaternion.identity);
+        GameObject miner = Instantiate(minerp, LeftSpawn.position, Quaternion.identity, spawn);
         miner.tag = "PlayerUnit";
-        
-playerMiners.Add(miner);
+
+        playerMiners.Add(miner);
 
         MinerController minerScript = miner.AddComponent<MinerController>();
-        minerScript.Initialize(minerIncome, minerInterval, "Player");
+        minerScript.Initialize(minerIncome, minerInterval, "Player", LeftBase.transform);
     }
 
     public void SpawnSwordsman()
@@ -174,17 +175,17 @@ playerMiners.Add(miner);
             botUnits.Add(warrior);
     }
 
-    
+
     void BotSpawn()
     {
-        
+
         botUnits.RemoveAll(u => u == null);
 
         if (botUnits.Count >= 7) return;
 
         if (botGold < 50)
         {
-            return; 
+            return;
         }
         else if (botGold < 75)
         {
@@ -223,7 +224,7 @@ playerMiners.Add(miner);
         botUnits.Add(miner);
 
         MinerController minerScript = miner.AddComponent<MinerController>();
-        minerScript.Initialize(minerIncome, minerInterval, "Bot");
+        minerScript.Initialize(minerIncome, minerInterval, "Bot", RightBase.transform);
     }
 
     void SpawnBotUnit(GameObject prefab)
@@ -246,8 +247,8 @@ playerMiners.Add(miner);
         {
             cost = TankPrice; damage = 30; speed = 0.5f; range = 1f; health = 200;
         }
-        
-if (botGold < cost) return;
+
+        if (botGold < cost) return;
         botGold -= cost;
 
         SpawnWarrior(prefab, damage, speed, range, health, "Bot");
@@ -264,7 +265,7 @@ if (botGold < cost) return;
         return count;
     }
 
-    
+
     public void AddGold(int amount, string team)
     {
         if (team == "Player") playerGold += amount;
@@ -298,13 +299,15 @@ public class MinerController : MonoBehaviour
     private float interval;
     private string team;
     private float timer;
+    private Transform homeBase;
 
-    public void Initialize(int goldPerTick, float tickInterval, string unitTeam)
+    public void Initialize(int goldPerTick, float tickInterval, string unitTeam, Transform baseTransform)
     {
         income = goldPerTick;
         interval = tickInterval;
         team = unitTeam;
         timer = 0;
+        homeBase = baseTransform;
     }
 
     void Update()
@@ -401,8 +404,8 @@ public class WarriorController : MonoBehaviour
         if (distance <= range)
         {
             lastAttackTime = Time.time;
-            
-if (target.CompareTag("BotUnit") || target.CompareTag("PlayerUnit"))
+
+            if (target.CompareTag("BotUnit") || target.CompareTag("PlayerUnit"))
             {
                 WarriorController enemy = target.GetComponent<WarriorController>();
                 if (enemy != null) enemy.TakeDamage(damage);

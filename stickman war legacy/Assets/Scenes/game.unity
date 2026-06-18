@@ -223,14 +223,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f023b849651c4ea637c93b07b3931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnOnButton
-  LeftSpawn: {fileID: 0}
-  RightSpawn: {fileID: 0}
-  LeftBase: {fileID: 0}
-  RightBase: {fileID: 0}
-  minerp: {fileID: 0}
-  swordp: {fileID: 0}
-  archerp: {fileID: 0}
-  tankp: {fileID: 0}
+  LeftSpawn: {fileID: 1944037359}
+  RightSpawn: {fileID: 1037714473}
+  LeftBase: {fileID: 1911425185}
+  RightBase: {fileID: 1725395623}
+  minerp: {fileID: 640823853714345851, guid: 71c8d935628d14d43aa61e3e21c9eec8, type: 3}
+  swordp: {fileID: 6921575581842734040, guid: 59572f94cb40a5a43ac7b5c0b5266099, type: 3}
+  archerp: {fileID: 1818024224241974504, guid: d0a8e3f7d6e299e4887febceaedc78f8, type: 3}
+  tankp: {fileID: 8833879034059018443, guid: 06d6b4f041ab49c4fa57262c8c846a59, type: 3}
   MinerPrice: 25
   SwordPrice: 50
   ArcherPrice: 75
@@ -254,6 +254,7 @@ MonoBehaviour:
   swordsmanPriceText: {fileID: 372161179}
   archerPriceText: {fileID: 1913896746}
   tankPriceText: {fileID: 562604592}
+  spawn: {fileID: 1944037359}
 --- !u!4 &251651138
 Transform:
   m_ObjectHideFlags: 0
@@ -1411,6 +1412,7 @@ RectTransform:
   - {fileID: 562604594}
   - {fileID: 487019436}
   - {fileID: 416106942}
+  - {fileID: 1944037359}
   m_Father: {fileID: 1195852728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2331,12 +2333,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944037358}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 323, y: 124, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -637, y: -416, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1139206883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2031062728
 GameObject:
@@ -2494,7 +2496,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1195852728}
   - {fileID: 378441899}
-  - {fileID: 1944037359}
   - {fileID: 251651138}
   - {fileID: 1037714473}
   - {fileID: 1192395566}
