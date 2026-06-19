@@ -223,38 +223,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2f023b849651c4ea637c93b07b3931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnOnButton
-  LeftSpawn: {fileID: 1944037359}
-  RightSpawn: {fileID: 1037714473}
-  LeftBase: {fileID: 1911425185}
-  RightBase: {fileID: 1725395623}
-  minerp: {fileID: 640823853714345851, guid: 71c8d935628d14d43aa61e3e21c9eec8, type: 3}
-  swordp: {fileID: 6921575581842734040, guid: 59572f94cb40a5a43ac7b5c0b5266099, type: 3}
-  archerp: {fileID: 1818024224241974504, guid: d0a8e3f7d6e299e4887febceaedc78f8, type: 3}
-  tankp: {fileID: 8833879034059018443, guid: 06d6b4f041ab49c4fa57262c8c846a59, type: 3}
+  MainCanvas: {fileID: 1139206882}
+  LeftSpawn: {fileID: 1911425186}
+  RightSpawn: {fileID: 1725395624}
+  LeftBase: {fileID: 1911425186}
+  RightBase: {fileID: 1725395624}
+  MinerPrefab: {fileID: 640823853714345851, guid: 71c8d935628d14d43aa61e3e21c9eec8, type: 3}
+  SwordPrefab: {fileID: 6921575581842734040, guid: 59572f94cb40a5a43ac7b5c0b5266099, type: 3}
+  ArcherPrefab: {fileID: 1818024224241974504, guid: d0a8e3f7d6e299e4887febceaedc78f8, type: 3}
+  TankPrefab: {fileID: 8833879034059018443, guid: 06d6b4f041ab49c4fa57262c8c846a59, type: 3}
   MinerPrice: 25
   SwordPrice: 50
   ArcherPrice: 75
   TankPrice: 150
-  ColvoM: 5
-  ColvoU: 7
-  botMinSpawnDelay: 2
-  botMaxSpawnDelay: 5
-  botStartGold: 100
-  botGoldRate: 1
-  minerIncome: 10
-  minerInterval: 3
-  playerGoldText: {fileID: 1130435693}
-  minerCountText: {fileID: 487019438}
-  warriorCountText: {fileID: 416106944}
-  minerButton: {fileID: 972337647}
-  swordsmanButton: {fileID: 368833875}
-  archerButton: {fileID: 1505476448}
-  tankButton: {fileID: 713208715}
-  minerPriceText: {fileID: 1683786052}
-  swordsmanPriceText: {fileID: 372161179}
-  archerPriceText: {fileID: 1913896746}
-  tankPriceText: {fileID: 562604592}
-  spawn: {fileID: 1944037359}
+  MaxMiners: 5
+  MaxWarriors: 7
+  BotSpawnDelay: 3
+  MinerIncome: 10
+  MinerInterval: 3
+  PlayerGoldText: {fileID: 1130435693}
+  MinerCountText: {fileID: 487019438}
+  WarriorCountText: {fileID: 416106944}
+  MinerButton: {fileID: 972337647}
+  SwordButton: {fileID: 368833875}
+  ArcherButton: {fileID: 1505476448}
+  TankButton: {fileID: 713208715}
+  MinerPriceText: {fileID: 1683786052}
+  SwordPriceText: {fileID: 372161179}
+  ArcherPriceText: {fileID: 1913896746}
+  TankPriceText: {fileID: 562604592}
 --- !u!4 &251651138
 Transform:
   m_ObjectHideFlags: 0
@@ -1139,12 +1136,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1037714472}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1602, y: 117, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 642, y: -423, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1139206883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1062676971
 GameObject:
@@ -1402,9 +1399,9 @@ RectTransform:
   - {fileID: 1725395624}
   - {fileID: 51016465}
   - {fileID: 972337644}
-  - {fileID: 368833872}
   - {fileID: 1505476445}
   - {fileID: 713208712}
+  - {fileID: 368833872}
   - {fileID: 1130435691}
   - {fileID: 1683786050}
   - {fileID: 372161177}
@@ -1413,6 +1410,7 @@ RectTransform:
   - {fileID: 487019436}
   - {fileID: 416106942}
   - {fileID: 1944037359}
+  - {fileID: 1037714473}
   m_Father: {fileID: 1195852728}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1474,6 +1472,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 5
+  rb: {fileID: 0}
+  movement: {x: 0, y: 0}
 --- !u!50 &1192395568
 Rigidbody2D:
   serializedVersion: 5
@@ -2091,6 +2091,8 @@ GameObject:
   - component: {fileID: 1725395624}
   - component: {fileID: 1725395626}
   - component: {fileID: 1725395625}
+  - component: {fileID: 1725395628}
+  - component: {fileID: 1725395627}
   m_Layer: 5
   m_Name: Tower 2
   m_TagString: Untagged
@@ -2155,6 +2157,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725395623}
   m_CullTransparentMesh: 1
+--- !u!61 &1725395627
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725395623}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 300, y: 600}
+  m_EdgeRadius: 0
+--- !u!114 &1725395628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725395623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faec2b3a30b2ae14a8afeda6f22dc14e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Base
+  MaxHealth: 1000
 --- !u!1 &1911425185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,6 +2227,8 @@ GameObject:
   - component: {fileID: 1911425186}
   - component: {fileID: 1911425188}
   - component: {fileID: 1911425187}
+  - component: {fileID: 1911425190}
+  - component: {fileID: 1911425189}
   m_Layer: 5
   m_Name: Tower 1
   m_TagString: Untagged
@@ -2230,6 +2293,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911425185}
   m_CullTransparentMesh: 1
+--- !u!61 &1911425189
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911425185}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 300, y: 600}
+  m_EdgeRadius: 0
+--- !u!114 &1911425190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911425185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faec2b3a30b2ae14a8afeda6f22dc14e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Base
+  MaxHealth: 1000
 --- !u!1 &1913896743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2497,5 +2619,4 @@ SceneRoots:
   - {fileID: 1195852728}
   - {fileID: 378441899}
   - {fileID: 251651138}
-  - {fileID: 1037714473}
   - {fileID: 1192395566}
