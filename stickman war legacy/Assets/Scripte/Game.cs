@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Game : MonoBehaviour
 {
     public static Game Instance;
-    public Canvas MainCanvas;
+    public Transform GameWorld;
     public RectTransform LeftSpawn;
     public RectTransform RightSpawn;
     public RectTransform LeftBase;
@@ -72,7 +72,7 @@ public class Game : MonoBehaviour
         if (CurrentMinerCount >= MaxMiners || PlayerGold < MinerPrice) return;
         PlayerGold -= MinerPrice;
         CurrentMinerCount++;
-        GameObject Obj = Instantiate(MinerPrefab, MainCanvas.transform);
+        GameObject Obj = Instantiate(MinerPrefab, GameWorld.transform);
         Obj.GetComponent<RectTransform>().anchoredPosition = LeftSpawn.anchoredPosition;
         PlayerMiners.Add(Obj);
         Obj.AddComponent<Miner>().Init(MinerIncome, MinerInterval, "Player");
@@ -106,7 +106,7 @@ public class Game : MonoBehaviour
     {
         RectTransform SpawnPoint = Team == "Player" ? LeftSpawn : RightSpawn;
         RectTransform EnemyBase = Team == "Player" ? RightBase : LeftBase;
-        GameObject Obj = Instantiate(Prefab, MainCanvas.transform);
+        GameObject Obj = Instantiate(Prefab, GameWorld.transform);
         Obj.GetComponent<RectTransform>().anchoredPosition = SpawnPoint.anchoredPosition;
         Obj.AddComponent<Unit>().Init(Damage, Speed, Range, Health, Team, EnemyBase);
         if (Team == "Player") PlayerWarriors.Add(Obj);
@@ -126,7 +126,7 @@ public class Game : MonoBehaviour
 
     void BotMakeMiner()
     {
-        GameObject Obj = Instantiate(MinerPrefab, MainCanvas.transform);
+        GameObject Obj = Instantiate(MinerPrefab, GameWorld.transform);
         Obj.GetComponent<RectTransform>().anchoredPosition = RightSpawn.anchoredPosition;
         BotUnits.Add(Obj);
         Obj.AddComponent<Miner>().Init(MinerIncome, MinerInterval, "Bot");
