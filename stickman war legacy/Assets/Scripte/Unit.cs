@@ -47,8 +47,12 @@ public class Unit : MonoBehaviour
             if (U == null || U.gameObject == gameObject) continue;
             if (U.GetTeam() != Team)
             {
-                float Dist = Vector2.Distance(MyRect.anchoredPosition, U.MyRect.anchoredPosition);
-                if (Dist < ClosestDistance) { ClosestDistance = Dist; TargetRect = U.MyRect; }
+                float Dist = Mathf.Abs(MyRect.anchoredPosition.x - U.MyRect.anchoredPosition.x);
+                if (Dist < ClosestDistance && Mathf.Abs(MyRect.anchoredPosition.y - U.MyRect.anchoredPosition.y) < 50f)
+                {
+                    ClosestDistance = Dist;
+                    TargetRect = U.MyRect;
+                }
             }
         }
 
@@ -58,8 +62,12 @@ public class Unit : MonoBehaviour
             if (M.GetTeam() != Team)
             {
                 RectTransform MRect = M.GetComponent<RectTransform>();
-                float Dist = Vector2.Distance(MyRect.anchoredPosition, MRect.anchoredPosition);
-                if (Dist < ClosestDistance) { ClosestDistance = Dist; TargetRect = MRect; }
+                float Dist = Mathf.Abs(MyRect.anchoredPosition.x - MRect.anchoredPosition.x);
+                if (Dist < ClosestDistance && Mathf.Abs(MyRect.anchoredPosition.y - MRect.anchoredPosition.y) < 50f)
+                {
+                    ClosestDistance = Dist;
+                    TargetRect = MRect;
+                }
             }
         }
 
@@ -69,18 +77,42 @@ public class Unit : MonoBehaviour
     void Move()
     {
         if (TargetRect == null) return;
-        float Dist = Vector2.Distance(MyRect.anchoredPosition, TargetRect.anchoredPosition);
+
+        Vector2 TargetPos;
+
+        if (TargetRect == EnemyBase)
+        {
+            TargetPos = new Vector2(TargetRect.anchoredPosition.x, MyRect.anchoredPosition.y);
+        }
+        else
+        {
+            TargetPos = new Vector2(TargetRect.anchoredPosition.x, MyRect.anchoredPosition.y);
+        }
+
+        float Dist = Mathf.Abs(MyRect.anchoredPosition.x - TargetPos.x);
+
         if (Dist > Range)
         {
-            Vector2 Dir = (TargetRect.anchoredPosition - MyRect.anchoredPosition).normalized;
-            MyRect.anchoredPosition += Dir * Speed * Time.deltaTime * 100f;
+            float Dir = TargetPos.x > MyRect.anchoredPosition.x ? 1f : -1f;
+            MyRect.anchoredPosition += new Vector2(Dir * Speed * Time.deltaTime * 100f, 0);
         }
     }
 
     void TryAttack()
     {
         if (TargetRect == null || Time.time - LastAttackTime < AttackCooldown) return;
-        float Dist = Vector2.Distance(MyRect.anchoredPosition, TargetRect.anchoredPosition);
+
+        float Dist;
+
+        if (TargetRect == EnemyBase)
+        {
+            Dist = Mathf.Abs(MyRect.anchoredPosition.x - EnemyBase.anchoredPosition.x);
+        }
+        else
+        {
+            Dist = Mathf.Abs(MyRect.anchoredPosition.x - TargetRect.anchoredPosition.x);
+        }
+
         if (Dist <= Range)
         {
             LastAttackTime = Time.time;
